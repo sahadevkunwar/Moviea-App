@@ -39,6 +39,9 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
           final movieDetailModel = state.movieDetailsModel;
           context
               .pushRoute(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+          // context.router
+          //     .push(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+
           // Navigator.of(context).push(MaterialPageRoute(
           //     builder: (context) => MovieDetailScreen(
           //           movieDetailsModel: movieDetailModel,
