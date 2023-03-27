@@ -1,6 +1,6 @@
 # bloc_project
 
-A new Flutter project.
+MovieApp Flutter project using BlocK Pattern.
 
 ## Getting Started
 
