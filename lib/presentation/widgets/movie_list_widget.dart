@@ -20,6 +20,7 @@ class MovieListWidget extends StatelessWidget {
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
         mainAxisExtent: 390,
+        // childAspectRatio: 0.7,
       ),
       itemCount: movieFetched.moviesCard.length,
       itemBuilder: (context, index) {
