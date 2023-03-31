@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i3;
+import 'package:bloc_project/data/models/movie_details_model.dart' as _i5;
 import 'package:bloc_project/presentation/screens/movie_detail_screen.dart'
     as _i1;
 import 'package:bloc_project/presentation/screens/movie_home_screen.dart'
@@ -45,7 +46,7 @@ abstract class $AppRouter extends _i3.RootStackRouter {
 class MovieDetailRoute extends _i3.PageRouteInfo<MovieDetailRouteArgs> {
   MovieDetailRoute({
     _i4.Key? key,
-    required dynamic movieDetailsModel,
+    required _i5.MovieDetailsModel movieDetailsModel,
     List<_i3.PageRouteInfo>? children,
   }) : super(
           MovieDetailRoute.name,
@@ -70,7 +71,7 @@ class MovieDetailRouteArgs {
 
   final _i4.Key? key;
 
-  final dynamic movieDetailsModel;
+  final _i5.MovieDetailsModel movieDetailsModel;
 
   @override
   String toString() {

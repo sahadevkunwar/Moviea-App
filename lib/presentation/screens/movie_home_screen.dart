@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bloc_project/core/router.gr.dart';
+import 'package:bloc_project/core/utils/shared_prefs.dart';
 import 'package:bloc_project/main.dart';
 import 'package:bloc_project/presentation/bloc/movie_cubit/movie_cubit.dart';
 import 'package:bloc_project/presentation/bloc/moviedetail_cubit/moviedetail_cubit.dart';
@@ -23,11 +24,16 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
   @override
   void initState() {
     super.initState();
+    setAppBarTitle();
+
     _moviedetailCubit = getIt<MovieDetailCubit>();
-    _movieCubit = getIt<MovieCubit>();
-    getIt<MovieCubit>().getUpcomingMovies(
-        apiUrl:
-            'http://api.themoviedb.org/3/movie/upcoming?api_key=caebc202bd0a26f84f4e0d986beb15cd');
+    _movieCubit = getIt<MovieCubit>()
+      ..getUpcomingMovies(
+          apiUrl:
+              'http://api.themoviedb.org/3/movie/upcoming?api_key=caebc202bd0a26f84f4e0d986beb15cd');
+    // _movieCubit.getUpcomingMovies(
+    //     apiUrl:
+    //         'http://api.themoviedb.org/3/movie/upcoming?api_key=caebc202bd0a26f84f4e0d986beb15cd');
   }
 
   @override
@@ -37,10 +43,11 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
       listener: (context, state) {
         if (state is MovieDetailsFetched) {
           final movieDetailModel = state.movieDetailsModel;
-          context
-              .pushRoute(MovieDetailRoute(movieDetailsModel: movieDetailModel));
-          // context.router
-          //     .push(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+          // context
+          //     .pushRoute(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+
+          context.router
+              .push(MovieDetailRoute(movieDetailsModel: movieDetailModel));
 
           // Navigator.of(context).push(MaterialPageRoute(
           //     builder: (context) => MovieDetailScreen(
@@ -56,7 +63,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
             preferredSize: const Size.fromHeight(130),
             child: AppBar(
               bottom: const TabBar(
-                indicatorWeight: 0.1,
+                indicatorWeight: 1,
                 isScrollable: true,
                 indicator: BoxDecoration(
                   shape: BoxShape.rectangle,
@@ -87,8 +94,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
                     const Text('Watch Now', style: TextStyle(fontSize: 30)),
                     IconButton(
                         onPressed: () {},
-                        icon: const Icon(CupertinoIcons.search_circle,
-                            size: 30.0))
+                        icon: const Icon(CupertinoIcons.search, size: 30.0))
                   ],
                 ),
               ),
@@ -104,7 +110,6 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
           body: Center(
             child: Container(
               decoration: const BoxDecoration(color: Colors.black87),
-              //  color: const Color.fromARGB(255, 41, 41, 41),
               child: Column(
                 children: [
                   Expanded(
@@ -133,4 +138,8 @@ class _MovieHomeScreenState extends State<MovieHomeScreen> {
       ),
     );
   }
+}
+
+void setAppBarTitle() {
+  PreferenceUtils.setString('titleBarKey', 'OUR MOVIE APP');
 }

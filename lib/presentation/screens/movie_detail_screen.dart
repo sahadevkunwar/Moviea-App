@@ -1,17 +1,36 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:bloc_project/core/utils/shared_prefs.dart';
 import 'package:bloc_project/data/models/movie_details_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class MovieDetailScreen extends StatelessWidget {
+class MovieDetailScreen extends StatefulWidget {
   const MovieDetailScreen({Key? key, required this.movieDetailsModel})
       : super(key: key);
   final MovieDetailsModel movieDetailsModel;
+
+  @override
+  State<MovieDetailScreen> createState() => _MovieDetailScreenState();
+}
+
+class _MovieDetailScreenState extends State<MovieDetailScreen> {
+  String appBarTitle='';
+  @override
+  void initState() {
+    super.initState();
+    appBarTitle=getAppBarTitle();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(appBarTitle),
+          // backgroundColor: Colors.transparent,
+          // bottomOpacity: 0.0,
+          // elevation: 0.0,
+        ),
         body: Container(
           color: Colors.black87,
           child: Column(
@@ -24,7 +43,7 @@ class MovieDetailScreen extends StatelessWidget {
                   children: [
                     CachedNetworkImage(
                       imageUrl:
-                          'https://image.tmdb.org/t/p/w300${movieDetailsModel.posterPath}',
+                          'https://image.tmdb.org/t/p/w300${widget.movieDetailsModel.posterPath}',
                       //height: 320,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -58,25 +77,32 @@ class MovieDetailScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      movieDetailsModel.title,
-                      style: const TextStyle(fontSize: 27, color: Colors.white),
-                      textAlign: TextAlign.left,
-                    ),
+              Flexible(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.movieDetailsModel.title,
+                          style: const TextStyle(
+                              fontSize: 27, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "(${widget.movieDetailsModel.releaseDate.year.toString()})",
+                          style: const TextStyle(
+                              fontSize: 27, color: Colors.white),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "(${movieDetailsModel.releaseDate.year.toString()})",
-                      style: const TextStyle(fontSize: 27, color: Colors.white),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -154,7 +180,7 @@ class MovieDetailScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(movieDetailsModel.overview,
+                child: Text(widget.movieDetailsModel.overview,
                     style: const TextStyle(fontSize: 20, color: Colors.white)),
               ),
             ],
@@ -164,3 +190,7 @@ class MovieDetailScreen extends StatelessWidget {
     );
   }
 }
+
+String getAppBarTitle(){
+ return PreferenceUtils.getString('titleBarKey','kdkdjsd');
+} 
