@@ -15,38 +15,39 @@ class MovieDetailScreen extends StatefulWidget {
 }
 
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
-  String appBarTitle='';
+  String appBarTitle = '';
   @override
   void initState() {
     super.initState();
-    appBarTitle=getAppBarTitle();
+    appBarTitle = getAppBarTitle();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(appBarTitle),
-          // backgroundColor: Colors.transparent,
-          // bottomOpacity: 0.0,
-          // elevation: 0.0,
-        ),
+        // appBar: AppBar(
+        //   title: Text(appBarTitle),
+
+        // ),
         body: Container(
+          height: MediaQuery.of(context).size.height,
           color: Colors.black87,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 300,
+                height: 400,
                 child: Stack(
                   children: [
                     CachedNetworkImage(
                       imageUrl:
                           'https://image.tmdb.org/t/p/w300${widget.movieDetailsModel.posterPath}',
                       //height: 320,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                      // width: double.infinity,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
                     ),
                     const Align(
                       alignment: Alignment.bottomCenter,
@@ -178,10 +179,16 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(widget.movieDetailsModel.overview,
-                    style: const TextStyle(fontSize: 20, color: Colors.white)),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(widget.movieDetailsModel.overview,
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white)),
+                  ),
+                ),
               ),
             ],
           ),
@@ -191,6 +198,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   }
 }
 
-String getAppBarTitle(){
- return PreferenceUtils.getString('titleBarKey','kdkdjsd');
-} 
+String getAppBarTitle() {
+  return PreferenceUtils.getString('titleBarKey');
+}

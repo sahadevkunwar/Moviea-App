@@ -51,9 +51,9 @@ class MovieListWidget extends StatelessWidget {
                             child: CachedNetworkImage(
                               imageUrl:
                                   'https://image.tmdb.org/t/p/w300${movie.posterPath}',
-                              height: 190,
+                              height: 200,
                               width: double.infinity,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
                             ),
@@ -76,23 +76,19 @@ class MovieListWidget extends StatelessWidget {
                               color: Colors.white, fontSize: 20),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  movie.overview,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 3,
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                              ),
+                      Flexible(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              movie.overview,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
+                              style: const TextStyle(
+                                  color: Colors.white54, fontSize: 14),
                             ),
                           ),
-                        ],
+                        ),
                       ),
                       // Padding(
                       //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
