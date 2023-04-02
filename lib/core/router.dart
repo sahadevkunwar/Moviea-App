@@ -7,5 +7,6 @@ class AppRouter extends $AppRouter {
   List<AutoRoute> get routes => [
         AutoRoute(page: MovieHomeRoute.page, path: '/'),
         AutoRoute(page: MovieDetailRoute.page, path: '/movieDetailRoute'),
+        AutoRoute(page: MovieSearchRoute.page, path: '/movieSearchRoute'),
       ];
 }

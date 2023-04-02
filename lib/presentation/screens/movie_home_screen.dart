@@ -58,7 +58,15 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
       },
       child: Scaffold(
         appBar: PreferredSize(
+          //   value: const SystemUiOverlayStyle(
+          //   statusBarColor: Colors.black, // status bar color
+          //   statusBarIconBrightness: Brightness.dark, //status bar icons' color
+          // systemNavigationBarColor: Colors.red, // navigation bar color
+          // systemNavigationBarIconBrightness:
+          //     Brightness.light, //navigation bar icons' color
+          // ),
           preferredSize: const Size.fromHeight(100),
+
           child: Container(
             color: Colors.black87,
             child: Column(
@@ -82,7 +90,8 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                     Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () =>
+                            context.router.push(const MovieSearchRoute()),
                         icon: const Icon(
                           Icons.search,
                           color: Colors.white,
@@ -149,37 +158,40 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           //     ),
           //   ),
           //   systemOverlayStyle: const SystemUiOverlayStyle(
-          //     //Control battery %,network status,notifications
-          //     // statusBarColor: Color.fromARGB(255, 41, 41, 41),
-          //     // statusBarIconBrightness: Brightness.light,
+          //     Control battery %,network status,notifications
+          //      statusBarColor: Color.fromARGB(255, 41, 41, 41),
+          //      statusBarIconBrightness: Brightness.light,
           //     statusBarColor: Colors.black,
           //     statusBarIconBrightness: Brightness.dark,
           //   ),
           // ),
         ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            Expanded(
-              child: BlocBuilder<MovieCubit, MovieState>(
-                  bloc: _movieCubit,
-                  builder: (context, state) {
-                    if (state is MovieFetched) {
-                      return MovieListWidget(
-                        movieFetched: state,
-                        onClick: (int movieId) {
-                          _moviedetailCubit.getMovieDetails(movieId: movieId);
-                        },
+        body: Container(
+          color: Colors.black87,
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              Expanded(
+                child: BlocBuilder<MovieCubit, MovieState>(
+                    bloc: _movieCubit,
+                    builder: (context, state) {
+                      if (state is MovieFetched) {
+                        return MovieListWidget(
+                          movieFetched: state,
+                          onClick: (int movieId) {
+                            _moviedetailCubit.getMovieDetails(movieId: movieId);
+                          },
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }),
-            ),
-            const Text("TAB2 "),
-            const Text("TAB3"),
-          ],
+                    }),
+              ),
+              const Text("TAB2 "),
+              const Text("TAB3"),
+            ],
+          ),
         ),
       ),
     );

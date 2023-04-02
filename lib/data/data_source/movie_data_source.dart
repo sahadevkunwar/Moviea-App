@@ -1,6 +1,7 @@
 import 'package:bloc_project/core/constants.dart';
 import 'package:bloc_project/data/models/movie_card_model.dart';
 import 'package:bloc_project/data/models/movie_details_model.dart';
+import 'package:bloc_project/data/models/searched_movie_model.dart';
 import 'package:bloc_project/main.dart';
 import 'package:dio/dio.dart';
 
@@ -39,5 +40,19 @@ class MovieDataSource {
       movieDetailsModel = MovieDetailsModel.fromJson(movieJson);
     }
     return movieDetailsModel;
+  }
+
+  Future<SearchedMovieModel?> searchMovie({required String userQuery}) async {
+    SearchedMovieModel? searchedMovieModel;
+    final String movieSearchApiPath =
+        '${MovieConstants.searchMovieUrl}query=$userQuery';
+    final Response<Map<String, dynamic>> movieDetailResponse =
+        await _dioClient.get(movieSearchApiPath);
+    final Map<String, dynamic>? movieJson = movieDetailResponse.data;
+    if (movieJson != null) {
+      searchedMovieModel = SearchedMovieModel.fromJson(movieJson);
+    }
+    return searchedMovieModel;
+    //print('api data ${searchedMovieModel}');
   }
 }

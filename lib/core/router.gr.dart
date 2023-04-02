@@ -8,23 +8,25 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i3;
-import 'package:bloc_project/data/models/movie_details_model.dart' as _i5;
+import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:bloc_project/data/models/movie_details_model.dart' as _i6;
 import 'package:bloc_project/presentation/screens/movie_detail_screen.dart'
     as _i1;
 import 'package:bloc_project/presentation/screens/movie_home_screen.dart'
     as _i2;
-import 'package:flutter/material.dart' as _i4;
+import 'package:bloc_project/presentation/screens/movie_search_screen.dart'
+    as _i3;
+import 'package:flutter/material.dart' as _i5;
 
-abstract class $AppRouter extends _i3.RootStackRouter {
-  $AppRouter([_i4.GlobalKey<_i4.NavigatorState>? navigatorKey])
+abstract class $AppRouter extends _i4.RootStackRouter {
+  $AppRouter([_i5.GlobalKey<_i5.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i3.PageFactory> pagesMap = {
+  final Map<String, _i4.PageFactory> pagesMap = {
     MovieDetailRoute.name: (routeData) {
       final args = routeData.argsAs<MovieDetailRouteArgs>();
-      return _i3.AutoRoutePage<dynamic>(
+      return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i1.MovieDetailScreen(
           key: args.key,
@@ -33,9 +35,15 @@ abstract class $AppRouter extends _i3.RootStackRouter {
       );
     },
     MovieHomeRoute.name: (routeData) {
-      return _i3.AutoRoutePage<dynamic>(
+      return _i4.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i2.MovieHomeScreen(),
+      );
+    },
+    MovieSearchRoute.name: (routeData) {
+      return _i4.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.MovieSearchScreen(),
       );
     },
   };
@@ -43,11 +51,11 @@ abstract class $AppRouter extends _i3.RootStackRouter {
 
 /// generated route for
 /// [_i1.MovieDetailScreen]
-class MovieDetailRoute extends _i3.PageRouteInfo<MovieDetailRouteArgs> {
+class MovieDetailRoute extends _i4.PageRouteInfo<MovieDetailRouteArgs> {
   MovieDetailRoute({
-    _i4.Key? key,
-    required _i5.MovieDetailsModel movieDetailsModel,
-    List<_i3.PageRouteInfo>? children,
+    _i5.Key? key,
+    required _i6.MovieDetailsModel movieDetailsModel,
+    List<_i4.PageRouteInfo>? children,
   }) : super(
           MovieDetailRoute.name,
           args: MovieDetailRouteArgs(
@@ -59,8 +67,8 @@ class MovieDetailRoute extends _i3.PageRouteInfo<MovieDetailRouteArgs> {
 
   static const String name = 'MovieDetailRoute';
 
-  static const _i3.PageInfo<MovieDetailRouteArgs> page =
-      _i3.PageInfo<MovieDetailRouteArgs>(name);
+  static const _i4.PageInfo<MovieDetailRouteArgs> page =
+      _i4.PageInfo<MovieDetailRouteArgs>(name);
 }
 
 class MovieDetailRouteArgs {
@@ -69,9 +77,9 @@ class MovieDetailRouteArgs {
     required this.movieDetailsModel,
   });
 
-  final _i4.Key? key;
+  final _i5.Key? key;
 
-  final _i5.MovieDetailsModel movieDetailsModel;
+  final _i6.MovieDetailsModel movieDetailsModel;
 
   @override
   String toString() {
@@ -81,8 +89,8 @@ class MovieDetailRouteArgs {
 
 /// generated route for
 /// [_i2.MovieHomeScreen]
-class MovieHomeRoute extends _i3.PageRouteInfo<void> {
-  const MovieHomeRoute({List<_i3.PageRouteInfo>? children})
+class MovieHomeRoute extends _i4.PageRouteInfo<void> {
+  const MovieHomeRoute({List<_i4.PageRouteInfo>? children})
       : super(
           MovieHomeRoute.name,
           initialChildren: children,
@@ -90,5 +98,19 @@ class MovieHomeRoute extends _i3.PageRouteInfo<void> {
 
   static const String name = 'MovieHomeRoute';
 
-  static const _i3.PageInfo<void> page = _i3.PageInfo<void>(name);
+  static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i3.MovieSearchScreen]
+class MovieSearchRoute extends _i4.PageRouteInfo<void> {
+  const MovieSearchRoute({List<_i4.PageRouteInfo>? children})
+      : super(
+          MovieSearchRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MovieSearchRoute';
+
+  static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
 }
