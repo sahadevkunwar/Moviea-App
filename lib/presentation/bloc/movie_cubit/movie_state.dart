@@ -9,6 +9,9 @@ class Equatable {}
 class MovieInitial extends MovieState {
   List<Object> get props => [];
 }
+class MovieFetching extends MovieState {
+  List<Object> get props => [];
+}
 
 class MovieFetched extends MovieState {
   MovieFetched(this.moviesCard);

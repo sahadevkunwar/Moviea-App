@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:bloc_project/core/router.gr.dart';
+import 'package:bloc_project/core/utils/hive_storage.dart';
 import 'package:bloc_project/core/utils/shared_prefs.dart';
 import 'package:bloc_project/main.dart';
 import 'package:bloc_project/presentation/bloc/movie_cubit/movie_cubit.dart';
@@ -65,7 +66,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           // systemNavigationBarIconBrightness:
           //     Brightness.light, //navigation bar icons' color
           // ),
-          preferredSize: const Size.fromHeight(100),
+          preferredSize: const Size.fromHeight(120),
 
           child: Container(
             color: Colors.black87,
@@ -83,8 +84,20 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 25,
+                          fontSize: 27,
                         ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        HiveUtils.fetchMovies();
+                        // HiveUtils.fetchSingleMovie();
+                        context.router.push(const BookmarkedMovieRoute());
+                      },
+                      icon: const Icon(
+                        Icons.bookmark_add,
+                        color: Colors.white,
+                        size: 30,
                       ),
                     ),
                     Align(
@@ -102,10 +115,25 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: TabBar(
+                    onTap: (index) {
+                      if (index == 0) {
+                        _movieCubit.getUpcomingMovies(
+                            apiUrl:
+                                'http://api.themoviedb.org/3/movie/upcoming?api_key=caebc202bd0a26f84f4e0d986beb15cd');
+                      } else if (index == 1) {
+                        _movieCubit.getUpcomingMovies(
+                            apiUrl:
+                                'http://api.themoviedb.org/3/movie/popular?api_key=caebc202bd0a26f84f4e0d986beb15cd');
+                      } else if (index == 2) {
+                        _movieCubit.getUpcomingMovies(
+                            apiUrl:
+                                'http://api.themoviedb.org/3/movie/top_rated?api_key=caebc202bd0a26f84f4e0d986beb15cd');
+                      }
+                    },
                     indicatorWeight: 1,
-                    //isScrollable: true,
+                    isScrollable: true,
                     indicator: const BoxDecoration(
                       shape: BoxShape.rectangle,
                       color: Colors.green,
@@ -115,9 +143,9 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                     ),
                     controller: _tabController,
                     tabs: const [
-                      Text('Upcoming', style: TextStyle(fontSize: 20)),
-                      Text('Popular', style: TextStyle(fontSize: 20)),
-                      Text('Top Rated', style: TextStyle(fontSize: 20)),
+                      Text('Upcoming', style: TextStyle(fontSize: 25)),
+                      Text('Popular', style: TextStyle(fontSize: 25)),
+                      Text('Top Rated', style: TextStyle(fontSize: 25)),
                     ],
                   ),
                 )
@@ -157,13 +185,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           //       ],
           //     ),
           //   ),
-          //   systemOverlayStyle: const SystemUiOverlayStyle(
-          //     Control battery %,network status,notifications
-          //      statusBarColor: Color.fromARGB(255, 41, 41, 41),
-          //      statusBarIconBrightness: Brightness.light,
-          //     statusBarColor: Colors.black,
-          //     statusBarIconBrightness: Brightness.dark,
-          //   ),
+
           // ),
         ),
         body: Container(
@@ -171,29 +193,53 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           child: TabBarView(
             controller: _tabController,
             children: [
-              Expanded(
-                child: BlocBuilder<MovieCubit, MovieState>(
-                    bloc: _movieCubit,
-                    builder: (context, state) {
-                      if (state is MovieFetched) {
-                        return MovieListWidget(
-                          movieFetched: state,
-                          onClick: (int movieId) {
-                            _moviedetailCubit.getMovieDetails(movieId: movieId);
-                          },
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }),
-              ),
-              const Text("TAB2 "),
-              const Text("TAB3"),
+              buildMethod(
+                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
+              buildMethod(
+                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
+              buildMethod(
+                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class buildMethod extends StatelessWidget {
+  const buildMethod({
+    super.key,
+    required MovieCubit movieCubit,
+    required MovieDetailCubit moviedetailCubit,
+  })  : _movieCubit = movieCubit,
+        _moviedetailCubit = moviedetailCubit;
+
+  final MovieCubit _movieCubit;
+  final MovieDetailCubit _moviedetailCubit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: BlocBuilder<MovieCubit, MovieState>(
+              bloc: _movieCubit,
+              builder: (context, state) {
+                if (state is MovieFetched) {
+                  return MovieListWidget(
+                    movieFetched: state,
+                    onClick: (int movieId) {
+                      _moviedetailCubit.getMovieDetails(movieId: movieId);
+                    },
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }),
+        ),
+      ],
     );
   }
 }

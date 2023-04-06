@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:bloc_project/core/utils/hive_storage.dart';
+import 'package:bloc_project/data/models/movie_card_model.dart';
 import 'package:bloc_project/presentation/bloc/movie_cubit/movie_cubit.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class MovieListWidget extends StatelessWidget {
+class MovieListWidget extends StatefulWidget {
   const MovieListWidget({
     Key? key,
     required this.onClick,
@@ -13,98 +15,147 @@ class MovieListWidget extends StatelessWidget {
   final MovieFetched movieFetched;
 
   @override
+  State<MovieListWidget> createState() => _MovieListWidgetState();
+}
+
+class _MovieListWidgetState extends State<MovieListWidget> {
+  final Set<MovieCardModel> movieSetCollection = {};
+
+  List<MovieCardModel> _storedList = [];
+  @override
+  void initState() {
+    super.initState();
+    _storedList = _fetchStoredMovies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 5,
         mainAxisSpacing: 5,
-        mainAxisExtent: 390,
-        // childAspectRatio: 0.7,
+        // mainAxisExtent: 390,
+        childAspectRatio: 0.6,
       ),
-      itemCount: movieFetched.moviesCard.length,
+      itemCount: widget.movieFetched.moviesCard.length,
       itemBuilder: (context, index) {
-        final movie = movieFetched.moviesCard[index];
+        final movie = widget.movieFetched.moviesCard[index];
+
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
-            onTap: () => onClick(movie.id),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 58, 56, 56),
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          ),
-                          child: Center(
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  'https://image.tmdb.org/t/p/w300${movie.posterPath}',
-                              height: 200,
-                              width: double.infinity,
-                              fit: BoxFit.fill,
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
+            onTap: () => widget.onClick(movie.id),
+            child: Stack(
+              //alignment: Alignment.topCenter,
+              children: [
+                SizedBox(
+                  width: 180,
+                  height: 290,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: CachedNetworkImage(
+                      width: 170,
+                      fit: BoxFit.fill,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      imageUrl:
+                          'https://image.tmdb.org/t/p/w300${movie.posterPath}',
+                    ),
+                  ),
+                ),
+                Align(
+                  // alignment: Alignment.bottomCenter,
+                  alignment: AlignmentDirectional.bottomCenter,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      color: Colors.black87,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Text(
+                              movie.title,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          movie.title,
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          '(${movie.releaseDate.year})',
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                      Flexible(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
+                          Padding(
+                            padding: const EdgeInsets.all(2),
+                            child: Text(
+                              '(${movie.releaseDate.year})',
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(3.0),
                             child: Text(
                               movie.overview,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 3,
                               style: const TextStyle(
-                                  color: Colors.white54, fontSize: 14),
+                                  color: Colors.white54, fontSize: 17),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                      //   child: Text(
-                      //     movie.backdropPath,
-                      //     style: const TextStyle(color: Colors.white),
-                      //   ),
-                      // ),
-                    ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () {
+                      _storedList = _fetchStoredMovies();
+                      movieSetCollection.addAll(_storedList);
+                      movieSetCollection.add(movie);
+
+                      HiveUtils.storeMovies(movieSetCollection.toList());
+                      setState(() {
+                        _storedList = _fetchStoredMovies();
+                      });
+                    },
+                    icon: _checkBookmarkedMovie(movie),
+                  ),
+                ),
+              ],
             ),
           ),
         );
       },
     );
+  }
+
+  Icon _checkBookmarkedMovie(MovieCardModel movie) {
+    if (_storedList.any((element) => element.id == movie.id)) {
+      return const Icon(
+        Icons.bookmark_outlined,
+        color: Colors.purple,
+      );
+    } else {
+      return const Icon(
+        Icons.bookmark_border,
+        color: Colors.white,
+      );
+    }
+  }
+
+  List<MovieCardModel> _fetchStoredMovies() {
+    final data = HiveUtils.fetchMovies();
+    final listData = List<MovieCardModel>.from(data);
+    return listData;
   }
 }
