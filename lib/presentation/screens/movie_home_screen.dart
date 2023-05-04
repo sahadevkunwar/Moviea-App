@@ -3,9 +3,11 @@ import 'package:bloc_project/core/router.gr.dart';
 import 'package:bloc_project/core/utils/hive_storage.dart';
 import 'package:bloc_project/core/utils/shared_prefs.dart';
 import 'package:bloc_project/main.dart';
+import 'package:bloc_project/presentation/bloc/logout_cubit/logout_cubit.dart';
 import 'package:bloc_project/presentation/bloc/movie_cubit/movie_cubit.dart';
 import 'package:bloc_project/presentation/bloc/moviedetail_cubit/moviedetail_cubit.dart';
 import 'package:bloc_project/presentation/widgets/movie_list_widget.dart';
+import 'package:floating_snackbar/floating_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,15 +22,17 @@ class MovieHomeScreen extends StatefulWidget {
 class _MovieHomeScreenState extends State<MovieHomeScreen>
     with TickerProviderStateMixin {
   late MovieCubit _movieCubit;
-  late MovieDetailCubit _moviedetailCubit;
+  late MovieDetailCubit _movieDetailCubit;
   late TabController _tabController;
+  late LogoutCubit _logoutCubit;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     setAppBarTitle();
-
-    _moviedetailCubit = getIt<MovieDetailCubit>();
+    _logoutCubit = getIt<LogoutCubit>();
+    _movieDetailCubit = getIt<MovieDetailCubit>();
     _movieCubit = getIt<MovieCubit>()
       ..getUpcomingMovies(
           apiUrl:
@@ -40,23 +44,60 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<MovieDetailCubit, MovieDetailState>(
-      bloc: _moviedetailCubit,
-      listener: (context, state) {
-        if (state is MovieDetailsFetched) {
-          final movieDetailModel = state.movieDetailsModel;
-          // context
-          //     .pushRoute(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<MovieDetailCubit, MovieDetailState>(
+          bloc: _movieDetailCubit,
+          listener: (context, state) {
+            if (state is MovieDetailsFetched) {
+              print('At home screen movie details state fetched');
 
-          context.router
-              .push(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+              final movieDetailModel = state.movieDetailsModel;
 
-          // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => MovieDetailScreen(
-          //           movieDetailsModel: movieDetailModel,
-          //         )));
-        }
-      },
+              context.router
+                  .push(MovieDetailRoute(movieDetailsModel: movieDetailModel));
+
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => MovieDetailScreen(
+              //           movieDetailsModel: movieDetailModel,
+              //         )));
+            } else if (state is MovieDetailError) {
+              print('At home screen error state');
+
+              FloatingSnackBar(
+                message: state.error,
+                context: context,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+              );
+            }
+          },
+        ),
+        BlocListener<LogoutCubit, LogoutState>(
+          bloc: _logoutCubit,
+          listener: (context, state) {
+            state.maybeWhen(
+                orElse: () {},
+                success: () {
+                  context.router.replaceAll([const LoginRoute()]);
+                });
+          },
+        ),
+        BlocListener<MovieCubit, MovieState>(listener: (context, state) {
+          if (state is MovieError) {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text(state.message)));
+            FloatingSnackBar(
+              message: state.message,
+              context: context,
+              textColor: Colors.white,
+              backgroundColor: Colors.red,
+              textStyle: const TextStyle(color: Colors.white),
+              duration: const Duration(milliseconds: 4000),
+            );
+          }
+        }),
+      ],
       child: Scaffold(
         appBar: PreferredSize(
           //   value: const SystemUiOverlayStyle(
@@ -100,6 +141,11 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                         size: 30,
                       ),
                     ),
+                    IconButton(
+                        onPressed: () {
+                          _logoutCubit.logoutUser();
+                        },
+                        icon: const Icon(Icons.logout, color: Colors.white)),
                     Align(
                       alignment: Alignment.topRight,
                       child: IconButton(
@@ -194,11 +240,11 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
             controller: _tabController,
             children: [
               buildMethod(
-                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
+                  movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
               buildMethod(
-                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
+                  movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
               buildMethod(
-                  movieCubit: _movieCubit, moviedetailCubit: _moviedetailCubit),
+                  movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
             ],
           ),
         ),
@@ -213,10 +259,10 @@ class buildMethod extends StatelessWidget {
     required MovieCubit movieCubit,
     required MovieDetailCubit moviedetailCubit,
   })  : _movieCubit = movieCubit,
-        _moviedetailCubit = moviedetailCubit;
+        _movieDetailCubit = moviedetailCubit;
 
   final MovieCubit _movieCubit;
-  final MovieDetailCubit _moviedetailCubit;
+  final MovieDetailCubit _movieDetailCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +276,7 @@ class buildMethod extends StatelessWidget {
                   return MovieListWidget(
                     movieFetched: state,
                     onClick: (int movieId) {
-                      _moviedetailCubit.getMovieDetails(movieId: movieId);
+                      _movieDetailCubit.getMovieDetails(movieId: movieId);
                     },
                   );
                 }

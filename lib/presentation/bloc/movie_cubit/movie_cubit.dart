@@ -1,8 +1,6 @@
-import 'package:bloc_project/data/data_source/movie_data_source.dart';
 import 'package:bloc_project/data/models/movie_card_model.dart';
 import 'package:bloc_project/data/repository/movie_repository.dart';
 import 'package:bloc_project/main.dart';
-import 'package:bloc_project/presentation/bloc/movie_search_cubit/movie_search_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'movie_state.dart';
@@ -17,7 +15,12 @@ class MovieCubit extends Cubit<MovieState> {
     emit(MovieFetching());
     final movieResult = await _movieRepository.getUpcomingMovies(url: apiUrl);
     // print('MovieResult:$movieResult');
-    emit(MovieFetched(movieResult));
+    movieResult.fold(
+        (error) => emit(error.when(
+            networkError: (message) => MovieError(message),
+            serverException: (serverError) => MovieError(serverError),
+            errorFromBacked: (String message) => MovieError(message))),
+        (right) => emit(MovieFetched(right)));
   }
 
   // void getMovieDetails({required int movieId}) async {

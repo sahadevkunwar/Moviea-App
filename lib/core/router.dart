@@ -5,7 +5,10 @@ import 'package:bloc_project/core/router.gr.dart';
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(page: MovieHomeRoute.page, path: '/'),
+        AutoRoute(page: MovieHomeRoute.page, path: '/movieHomeRoute'),
+        AutoRoute(page: LoginRoute.page, path: '/loginRoute'),
+        AutoRoute(page: SplashRoute.page, path: '/'),
+        AutoRoute(page: RegisterRoute.page, path: '/registerRoute'),
         AutoRoute(page: MovieDetailRoute.page, path: '/movieDetailRoute'),
         AutoRoute(page: MovieSearchRoute.page, path: '/movieSearchRoute'),
         AutoRoute(

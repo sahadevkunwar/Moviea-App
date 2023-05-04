@@ -16,37 +16,54 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ApiException {
+  String get message => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() networkError,
+    required TResult Function(String message) networkError,
+    required TResult Function(String message) serverException,
+    required TResult Function(String message) errorFromBacked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? networkError,
+    TResult? Function(String message)? networkError,
+    TResult? Function(String message)? serverException,
+    TResult? Function(String message)? errorFromBacked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? networkError,
+    TResult Function(String message)? networkError,
+    TResult Function(String message)? serverException,
+    TResult Function(String message)? errorFromBacked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_ServerException value) serverException,
+    required TResult Function(_BackendException value) errorFromBacked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_ServerException value)? serverException,
+    TResult? Function(_BackendException value)? errorFromBacked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NetworkError value)? networkError,
+    TResult Function(_ServerException value)? serverException,
+    TResult Function(_BackendException value)? errorFromBacked,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ApiExceptionCopyWith<ApiException> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -55,6 +72,8 @@ abstract class $ApiExceptionCopyWith<$Res> {
   factory $ApiExceptionCopyWith(
           ApiException value, $Res Function(ApiException) then) =
       _$ApiExceptionCopyWithImpl<$Res, ApiException>;
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -66,13 +85,30 @@ class _$ApiExceptionCopyWithImpl<$Res, $Val extends ApiException>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_value.copyWith(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_NetworkErrorCopyWith<$Res> {
+abstract class _$$_NetworkErrorCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
   factory _$$_NetworkErrorCopyWith(
           _$_NetworkError value, $Res Function(_$_NetworkError) then) =
       __$$_NetworkErrorCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
 }
 
 /// @nodoc
@@ -82,51 +118,82 @@ class __$$_NetworkErrorCopyWithImpl<$Res>
   __$$_NetworkErrorCopyWithImpl(
       _$_NetworkError _value, $Res Function(_$_NetworkError) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_NetworkError(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_NetworkError implements _NetworkError {
-  _$_NetworkError();
+  _$_NetworkError({this.message = 'Please check your internet connection'});
+
+  @override
+  @JsonKey()
+  final String message;
 
   @override
   String toString() {
-    return 'ApiException.networkError()';
+    return 'ApiException.networkError(message: $message)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NetworkError);
+        (other.runtimeType == runtimeType &&
+            other is _$_NetworkError &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_NetworkErrorCopyWith<_$_NetworkError> get copyWith =>
+      __$$_NetworkErrorCopyWithImpl<_$_NetworkError>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() networkError,
+    required TResult Function(String message) networkError,
+    required TResult Function(String message) serverException,
+    required TResult Function(String message) errorFromBacked,
   }) {
-    return networkError();
+    return networkError(message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? networkError,
+    TResult? Function(String message)? networkError,
+    TResult? Function(String message)? serverException,
+    TResult? Function(String message)? errorFromBacked,
   }) {
-    return networkError?.call();
+    return networkError?.call(message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? networkError,
+    TResult Function(String message)? networkError,
+    TResult Function(String message)? serverException,
+    TResult Function(String message)? errorFromBacked,
     required TResult orElse(),
   }) {
     if (networkError != null) {
-      return networkError();
+      return networkError(message);
     }
     return orElse();
   }
@@ -135,6 +202,8 @@ class _$_NetworkError implements _NetworkError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_ServerException value) serverException,
+    required TResult Function(_BackendException value) errorFromBacked,
   }) {
     return networkError(this);
   }
@@ -143,6 +212,8 @@ class _$_NetworkError implements _NetworkError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_ServerException value)? serverException,
+    TResult? Function(_BackendException value)? errorFromBacked,
   }) {
     return networkError?.call(this);
   }
@@ -151,6 +222,8 @@ class _$_NetworkError implements _NetworkError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_NetworkError value)? networkError,
+    TResult Function(_ServerException value)? serverException,
+    TResult Function(_BackendException value)? errorFromBacked,
     required TResult orElse(),
   }) {
     if (networkError != null) {
@@ -161,5 +234,300 @@ class _$_NetworkError implements _NetworkError {
 }
 
 abstract class _NetworkError implements ApiException {
-  factory _NetworkError() = _$_NetworkError;
+  factory _NetworkError({final String message}) = _$_NetworkError;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_NetworkErrorCopyWith<_$_NetworkError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_ServerExceptionCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
+  factory _$$_ServerExceptionCopyWith(
+          _$_ServerException value, $Res Function(_$_ServerException) then) =
+      __$$_ServerExceptionCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_ServerExceptionCopyWithImpl<$Res>
+    extends _$ApiExceptionCopyWithImpl<$Res, _$_ServerException>
+    implements _$$_ServerExceptionCopyWith<$Res> {
+  __$$_ServerExceptionCopyWithImpl(
+      _$_ServerException _value, $Res Function(_$_ServerException) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_ServerException(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ServerException implements _ServerException {
+  _$_ServerException({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ApiException.serverException(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ServerException &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ServerExceptionCopyWith<_$_ServerException> get copyWith =>
+      __$$_ServerExceptionCopyWithImpl<_$_ServerException>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) networkError,
+    required TResult Function(String message) serverException,
+    required TResult Function(String message) errorFromBacked,
+  }) {
+    return serverException(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? networkError,
+    TResult? Function(String message)? serverException,
+    TResult? Function(String message)? errorFromBacked,
+  }) {
+    return serverException?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? networkError,
+    TResult Function(String message)? serverException,
+    TResult Function(String message)? errorFromBacked,
+    required TResult orElse(),
+  }) {
+    if (serverException != null) {
+      return serverException(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_ServerException value) serverException,
+    required TResult Function(_BackendException value) errorFromBacked,
+  }) {
+    return serverException(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_ServerException value)? serverException,
+    TResult? Function(_BackendException value)? errorFromBacked,
+  }) {
+    return serverException?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_ServerException value)? serverException,
+    TResult Function(_BackendException value)? errorFromBacked,
+    required TResult orElse(),
+  }) {
+    if (serverException != null) {
+      return serverException(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ServerException implements ApiException {
+  factory _ServerException({required final String message}) =
+      _$_ServerException;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ServerExceptionCopyWith<_$_ServerException> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_BackendExceptionCopyWith<$Res>
+    implements $ApiExceptionCopyWith<$Res> {
+  factory _$$_BackendExceptionCopyWith(
+          _$_BackendException value, $Res Function(_$_BackendException) then) =
+      __$$_BackendExceptionCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_BackendExceptionCopyWithImpl<$Res>
+    extends _$ApiExceptionCopyWithImpl<$Res, _$_BackendException>
+    implements _$$_BackendExceptionCopyWith<$Res> {
+  __$$_BackendExceptionCopyWithImpl(
+      _$_BackendException _value, $Res Function(_$_BackendException) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_BackendException(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_BackendException implements _BackendException {
+  _$_BackendException({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ApiException.errorFromBacked(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BackendException &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BackendExceptionCopyWith<_$_BackendException> get copyWith =>
+      __$$_BackendExceptionCopyWithImpl<_$_BackendException>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) networkError,
+    required TResult Function(String message) serverException,
+    required TResult Function(String message) errorFromBacked,
+  }) {
+    return errorFromBacked(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? networkError,
+    TResult? Function(String message)? serverException,
+    TResult? Function(String message)? errorFromBacked,
+  }) {
+    return errorFromBacked?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? networkError,
+    TResult Function(String message)? serverException,
+    TResult Function(String message)? errorFromBacked,
+    required TResult orElse(),
+  }) {
+    if (errorFromBacked != null) {
+      return errorFromBacked(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_NetworkError value) networkError,
+    required TResult Function(_ServerException value) serverException,
+    required TResult Function(_BackendException value) errorFromBacked,
+  }) {
+    return errorFromBacked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_NetworkError value)? networkError,
+    TResult? Function(_ServerException value)? serverException,
+    TResult? Function(_BackendException value)? errorFromBacked,
+  }) {
+    return errorFromBacked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_NetworkError value)? networkError,
+    TResult Function(_ServerException value)? serverException,
+    TResult Function(_BackendException value)? errorFromBacked,
+    required TResult orElse(),
+  }) {
+    if (errorFromBacked != null) {
+      return errorFromBacked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BackendException implements ApiException {
+  factory _BackendException({required final String message}) =
+      _$_BackendException;
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_BackendExceptionCopyWith<_$_BackendException> get copyWith =>
+      throw _privateConstructorUsedError;
 }

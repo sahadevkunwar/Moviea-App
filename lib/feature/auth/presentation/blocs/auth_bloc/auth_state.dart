@@ -1,11 +1,13 @@
-part of 'register_bloc.dart';
+part of 'auth_bloc.dart';
 
 @freezed
-class RegisterState with _$RegisterState {
-  factory RegisterState.initial() = InitialState;
-  factory RegisterState.success({required String message}) =
-      RegisterSuccessState;
-  factory RegisterState.registering() = RegisteringState;
+class AuthState with _$AuthState {
+  factory AuthState.initial() = InitialState;
+  factory AuthState.success({required String message}) = RegisterSuccessState;
+  factory AuthState.loginSuccess({required String message}) = LoginSuccessState;
+  factory AuthState.authError({required String message}) = ErrorState;
+  factory AuthState.registering() = RegisteringState;
+  factory AuthState.logging() = LoggingState;
 }
 
 // class RegisterInitial extends RegisterState {

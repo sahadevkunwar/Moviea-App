@@ -9,6 +9,13 @@ class Equatable {}
 class MovieInitial extends MovieState {
   List<Object> get props => [];
 }
+
+class MovieError extends MovieState {
+  MovieError(this.message);
+  String message;
+  List<Object> get props => [message];
+}
+
 class MovieFetching extends MovieState {
   List<Object> get props => [];
 }

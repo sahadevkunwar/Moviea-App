@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc_project/core/db_constants.dart';
 import 'package:bloc_project/data/models/movie_card_model.dart';
+import 'package:bloc_project/feature/auth/data/models/registration_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveUtils {
@@ -75,5 +76,31 @@ class HiveUtils {
 
   static void deleteAllMovies() {
     _ourDataBase?.delete('Movies');
+  }
+
+  bool registerUser(RegistrationModel registrationModel) {
+    _ourDataBase?.put(registrationModel.username, registrationModel.toJson());
+
+    return true;
+  }
+
+  Map<dynamic, dynamic> getRegisterUser({required String username}) {
+    return _ourDataBase?.get(username);
+  }
+
+  String getPassword() {
+    return _ourDataBase?.get('password');
+  }
+
+  void saveLoggedInState({required bool status}) {
+    _ourDataBase?.put('loggedIn', status);
+  }
+
+  bool getLoggedInStatus() {
+    return _ourDataBase?.get('loggedIn') ?? false;
+  }
+
+  void logoutUser() {
+    _ourDataBase?.delete('loggedIn');
   }
 }

@@ -14,9 +14,11 @@ class MovieSearchCubit extends Cubit<MovieSearchState> {
 
   void searchMovie({required String queryFromUI}) async {
     emit(MovieFetching());
-    final SearchedMovieModel? movieModel =
-        await _movieRepository.searchMovie(querFromCubit: queryFromUI);
-    _checkResultResponse(movieModel);
+    final response =
+        await _movieRepository.searchMovie(queryFromCubit: queryFromUI);
+    response.fold(
+        (error) => emit(SearchedError(errorMessage: error.toString())),
+        (movieModel) => _checkResultResponse(movieModel));
   }
 
   void _checkResultResponse(SearchedMovieModel? movieModel) {
