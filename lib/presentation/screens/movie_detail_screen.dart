@@ -55,7 +55,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           'Overview',
-                          style: TextStyle(fontSize: 30, color: Colors.white),
+                          style: TextStyle(fontSize: 25, color: Colors.white),
                         ),
                       ),
                     ),
@@ -84,11 +84,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text(
                           widget.movieDetailsModel.title,
                           style: const TextStyle(
-                              fontSize: 27, color: Colors.white),
+                              fontSize: 25, color: Colors.white),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -97,7 +97,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         child: Text(
                           "(${widget.movieDetailsModel.releaseDate.year.toString()})",
                           style: const TextStyle(
-                              fontSize: 27, color: Colors.white),
+                              fontSize: 25, color: Colors.white),
                           textAlign: TextAlign.left,
                         ),
                       ),
@@ -121,7 +121,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Adventure',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -140,7 +140,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Fantasy',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -159,7 +159,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Comedy',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 17,
                           color: Colors.white,
                         ),
                       ),
@@ -175,7 +175,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   child: Text(
                     textAlign: TextAlign.start,
                     'Storyline',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    style: TextStyle(fontSize: 21, color: Colors.white),
                   ),
                 ),
               ),
@@ -186,7 +186,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(widget.movieDetailsModel.overview,
                         style:
-                            const TextStyle(fontSize: 20, color: Colors.white)),
+                            const TextStyle(fontSize: 18, color: Colors.white)),
                   ),
                 ),
               ),

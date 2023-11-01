@@ -170,6 +170,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => context.router.pushAndPopUntil(
+                      const LoginRoute(),
+                      predicate: (route) => false),
+                  child: const Text.rich(
+                    TextSpan(
+                      style: TextStyle(fontSize: 15),
+                      text: "Already have an account ? ", // default text style
+                      children: [
+                        TextSpan(
+                          text: 'Login',
+                          style: TextStyle(
+                              fontStyle: FontStyle.italic, color: Colors.blue),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

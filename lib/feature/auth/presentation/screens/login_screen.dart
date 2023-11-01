@@ -61,7 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login Form'),
+          title: const Text(
+            'Login Form',
+            style: TextStyle(fontSize: 25),
+          ),
+          centerTitle: true,
         ),
         body: Form(
           key: _formKey,
@@ -108,7 +112,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                       _passwordController.text));
                                 }
                               },
-                              child: const Text('Login'),
+                              child: const Text(
+                                'Login',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                             const SizedBox(height: 10),
                           ],
@@ -122,7 +129,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text('Login'),
+                              Text(
+                                'Login',
+                              ),
                               SizedBox(
                                 height: 15,
                                 width: 15,
@@ -141,7 +150,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               GestureDetector(
                 onTap: () => context.router.push(const RegisterRoute()),
-                child: const Text("Don't have account ? SignUp"),
+                child: const Text.rich(
+                  TextSpan(
+                    style: TextStyle(fontSize: 18),
+                    text: "Don't have account ?", // default text style
+                    children: [
+                      TextSpan(
+                        text: 'SignUp',
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic, color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

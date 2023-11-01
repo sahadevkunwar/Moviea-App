@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
                 _appRouter.push(const MovieHomeRoute());
               },
               isNotLoggedIn: () {
-                _appRouter.push(const LoginRoute());
+                _appRouter.pushAndPopUntil(const LoginRoute(),
+                    predicate: (route) => false);
               });
         },
         child: MaterialApp.router(

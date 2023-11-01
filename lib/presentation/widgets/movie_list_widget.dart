@@ -85,9 +85,11 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                             padding: const EdgeInsets.all(3.0),
                             child: Text(
                               movie.title,
+                              maxLines: 2,
                               style: const TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -97,7 +99,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                             child: Text(
                               '(${movie.releaseDate.year})',
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 20),
+                                  color: Colors.white, fontSize: 18),
                             ),
                           ),
                           Padding(
@@ -105,9 +107,9 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                             child: Text(
                               movie.overview,
                               overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                              maxLines: 2,
                               style: const TextStyle(
-                                  color: Colors.white54, fontSize: 17),
+                                  color: Colors.white54, fontSize: 13),
                             ),
                           ),
                         ],
