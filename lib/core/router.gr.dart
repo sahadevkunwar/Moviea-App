@@ -26,8 +26,7 @@ import 'package:bloc_project/splash_screen.dart' as _i7;
 import 'package:flutter/material.dart' as _i9;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
-  $AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+  $AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey]) : super();
 
   @override
   final Map<String, _i8.PageFactory> pagesMap = {

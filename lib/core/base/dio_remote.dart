@@ -30,7 +30,7 @@ class BaseRemoteSource {
       } else {
         throw 'UnExpected Error Occurred!!!';
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // throw e.toApiException;
       throw e.toApiException;
     } catch (e) {

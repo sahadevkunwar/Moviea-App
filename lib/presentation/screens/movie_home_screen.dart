@@ -50,8 +50,6 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           bloc: _movieDetailCubit,
           listener: (context, state) {
             if (state is MovieDetailsFetched) {
-              print('At home screen movie details state fetched');
-
               final movieDetailModel = state.movieDetailsModel;
 
               context.router
@@ -62,8 +60,6 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
               //           movieDetailsModel: movieDetailModel,
               //         )));
             } else if (state is MovieDetailError) {
-              print('At home screen error state');
-
               FloatingSnackBar(
                 message: state.error,
                 context: context,
@@ -161,7 +157,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(11.0),
                   child: TabBar(
                     onTap: (index) {
                       if (index == 0) {
@@ -189,9 +185,19 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                     ),
                     controller: _tabController,
                     tabs: const [
-                      Text('Upcoming', style: TextStyle(fontSize: 25)),
-                      Text('Popular', style: TextStyle(fontSize: 25)),
-                      Text('Top Rated', style: TextStyle(fontSize: 25)),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Text('Upcoming', style: TextStyle(fontSize: 18)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Text('Popular', style: TextStyle(fontSize: 18)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child:
+                            Text('Top Rated', style: TextStyle(fontSize: 18)),
+                      ),
                     ],
                   ),
                 )
@@ -239,11 +245,11 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           child: TabBarView(
             controller: _tabController,
             children: [
-              buildMethod(
+              BuildMethod(
                   movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
-              buildMethod(
+              BuildMethod(
                   movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
-              buildMethod(
+              BuildMethod(
                   movieCubit: _movieCubit, moviedetailCubit: _movieDetailCubit),
             ],
           ),
@@ -253,8 +259,8 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
   }
 }
 
-class buildMethod extends StatelessWidget {
-  const buildMethod({
+class BuildMethod extends StatelessWidget {
+  const BuildMethod({
     super.key,
     required MovieCubit movieCubit,
     required MovieDetailCubit moviedetailCubit,

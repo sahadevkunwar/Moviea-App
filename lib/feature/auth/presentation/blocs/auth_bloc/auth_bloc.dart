@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_project/feature/auth/data/models/registration_model.dart';
 import 'package:bloc_project/feature/auth/data/register_repo_impl.dart';
 import 'package:bloc_project/main.dart';

@@ -43,10 +43,9 @@ class HiveUtils {
   }
 
   static fetchSingleMovie() {
-    final String fetchedData = _ourDataBase?.get(DBConstants.singleMovieKey);
-    final Map<String, dynamic> decodedJson = jsonDecode(fetchedData);
-    final MovieCardModel movie = MovieCardModel.fromJson(decodedJson);
-    // print("Fetched Data:$decodedJson");
+    //final String fetchedData = _ourDataBase?.get(DBConstants.singleMovieKey);
+    // final Map<String, dynamic> decodedJson = jsonDecode(fetchedData);
+    //final MovieCardModel movie = MovieCardModel.fromJson(decodedJson);
   }
 
   static storeMovies(List<MovieCardModel> movies) {

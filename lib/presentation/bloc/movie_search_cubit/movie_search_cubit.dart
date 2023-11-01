@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_project/data/models/searched_movie_model.dart';
 import 'package:bloc_project/data/repository/movie_repository.dart';
 import 'package:bloc_project/main.dart';

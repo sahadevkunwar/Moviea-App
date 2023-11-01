@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc_project/core/extension/dio_extension.dart';
 import 'package:bloc_project/main.dart';
 import 'package:dartz/dartz.dart';
@@ -16,12 +18,13 @@ class HandleNetworkCall {
       } else {
         return left('Something went wrong. Please try again');
       }
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       if (error.isUnauthorizedAccess) {
         return left(error.unAuthorizedMessage);
       } else if (error.noConnectionError) {
         return left('No connection');
-      } else if ((error).type == DioErrorType.badResponse &&
+        // ignore: unrelated_type_equality_checks
+      } else if ((error).type == DioException.badResponse &&
           (error).response?.statusCode == 404) {
         return left('404 Not Url Found');
       }

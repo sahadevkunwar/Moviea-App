@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:bloc_project/core/exception/api_exception.dart';
 import 'package:dio/dio.dart';
 
-extension DioErrorX on DioError {
+extension DioErrorX on DioException {
   ApiException get toApiException {
     switch (type) {
-      case DioErrorType.badResponse:
+      case DioExceptionType.badResponse:
         final statusCode = response?.statusCode;
         if (statusCode == 200) {
           final error = response?.data as Map<String, dynamic>;
@@ -16,36 +16,30 @@ extension DioErrorX on DioError {
             message:
                 'we are unable to process your request. Please try again later.');
 
-      case DioErrorType.connectionTimeout:
-        // TODO: Handle this case.
+      case DioExceptionType.connectionTimeout:
         break;
-      case DioErrorType.sendTimeout:
-        // TODO: Handle this case.
+      case DioExceptionType.sendTimeout:
         break;
-      case DioErrorType.receiveTimeout:
-        // TODO: Handle this case.
+      case DioExceptionType.receiveTimeout:
         break;
-      case DioErrorType.badCertificate:
-        // TODO: Handle this case.
+      case DioExceptionType.badCertificate:
         break;
-      case DioErrorType.cancel:
-        // TODO: Handle this case.
+      case DioExceptionType.cancel:
         break;
-      case DioErrorType.connectionError:
+      case DioExceptionType.connectionError:
         return ApiException.networkError();
 
-      case DioErrorType.unknown:
-        // TODO: Handle this case.
+      case DioExceptionType.unknown:
         break;
     }
     return ApiException.networkError();
   }
 
   bool get noConnectionError =>
-      type == DioErrorType.connectionError && error is SocketException;
+      type == DioExceptionType.connectionError && error is SocketException;
 
   bool get isUnauthorizedAccess =>
-      type == DioErrorType.badResponse && response?.statusCode == 401;
+      type == DioExceptionType.badResponse && response?.statusCode == 401;
 
   String get serverErrorMessage => 'Server Error';
   String get unAuthorizedMessage => 'Unauthorized Error';

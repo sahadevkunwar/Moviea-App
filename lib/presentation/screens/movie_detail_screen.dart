@@ -113,7 +113,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       shape: BoxShape.rectangle,
                       color: Color.fromARGB(255, 110, 110, 110),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(50),
+                        Radius.circular(40),
                       ),
                     ),
                     child: const Padding(
@@ -121,7 +121,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Adventure',
                         style: TextStyle(
-                          fontSize: 27,
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
@@ -132,7 +132,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       shape: BoxShape.rectangle,
                       color: Color.fromARGB(255, 110, 110, 110),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(50),
+                        Radius.circular(40),
                       ),
                     ),
                     child: const Padding(
@@ -140,7 +140,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Fantasy',
                         style: TextStyle(
-                          fontSize: 27,
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),
@@ -151,7 +151,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       shape: BoxShape.rectangle,
                       color: Color.fromARGB(255, 110, 110, 110),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(50),
+                        Radius.circular(40),
                       ),
                     ),
                     child: const Padding(
@@ -159,7 +159,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       child: Text(
                         'Comedy',
                         style: TextStyle(
-                          fontSize: 27,
+                          fontSize: 20,
                           color: Colors.white,
                         ),
                       ),

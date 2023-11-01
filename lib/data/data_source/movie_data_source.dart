@@ -1,10 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:bloc_project/core/base/dio_remote.dart';
 import 'package:bloc_project/core/constants.dart';
 import 'package:bloc_project/core/exception/api_exception.dart';
 import 'package:bloc_project/data/models/movie_card_model.dart';
 import 'package:bloc_project/data/models/movie_details_model.dart';
 import 'package:bloc_project/data/models/searched_movie_model.dart';
-import 'package:bloc_project/main.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
@@ -12,8 +13,7 @@ import 'package:dio/dio.dart';
 class MovieDataSource extends BaseRemoteSource {
   //initializing dio client when the object of MovieDataSource is created
   //   MovieDataSource(this._dioClient);
-  MovieDataSource() : _dioClient = getIt<Dio>();
-  late final Dio _dioClient;
+  MovieDataSource();
 
   Future<Either<ApiException, List<MovieCardModel>>> fetchUpcomingMovies(
       {required String upcomingMoviesUrl}) async {
@@ -59,8 +59,7 @@ class MovieDataSource extends BaseRemoteSource {
   }
 
   Future<MovieDetailsModel?> fetchMovieDetails({required int movieId}) async {
-    MovieDetailsModel? movieDetailsModel;
-    print('At datasource');
+    //MovieDetailsModel? movieDetailsModel;
 
     return networkHandler(request: (dio) {
       return dio.get(

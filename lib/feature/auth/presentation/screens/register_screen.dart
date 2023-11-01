@@ -91,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'user name is required';
-                    } else if (value.length < 1) {
+                    } else if (value.isEmpty) {
                       return 'Invalid user number';
                     }
                     return null;

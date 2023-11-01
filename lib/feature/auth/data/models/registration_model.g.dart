@@ -6,6 +6,7 @@ part of 'registration_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_RegistrationModel _$$_RegistrationModelFromJson(Map<String, dynamic> json) =>
     _$_RegistrationModel(
       email: json['email'] as String?,
@@ -17,6 +18,7 @@ _$_RegistrationModel _$$_RegistrationModelFromJson(Map<String, dynamic> json) =>
       phoneNo: json['phoneNo'] as String?,
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_RegistrationModelToJson(
         _$_RegistrationModel instance) =>
     <String, dynamic>{

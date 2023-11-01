@@ -117,11 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     logging: () {
                       return _buildLoginButton(
-                        child: ElevatedButton(
+                        child: const ElevatedButton(
                           onPressed: null,
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Text('Login'),
                               SizedBox(
                                 height: 15,

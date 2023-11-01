@@ -6,6 +6,7 @@ import 'package:bloc_project/data/data_source/movie_data_source.dart';
 import 'package:bloc_project/data/models/movie_card_model.dart';
 import 'package:bloc_project/data/models/movie_details_model.dart';
 import 'package:bloc_project/data/models/searched_movie_model.dart';
+// ignore: depend_on_referenced_packages
 import 'package:dartz/dartz.dart';
 
 class MovieRepository extends BaseRepository {
@@ -20,11 +21,9 @@ class MovieRepository extends BaseRepository {
 
   Future<Either<String?, MovieDetailsModel?>> getMovieDetails(
       {required int movieId}) async {
-    print('At repo');
-
     return handleNetworkCall(
         call: _movieDataSource.fetchMovieDetails(movieId: movieId),
-        onSuccess: (data) => data as MovieDetailsModel?);
+        onSuccess: (data) => data);
 
     // try {
     //   final movieDetailModel =
