@@ -38,7 +38,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 400,
+                height: 350,
                 child: Stack(
                   children: [
                     CachedNetworkImage(
@@ -47,7 +47,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       //height: 320,
                       // width: double.infinity,
                       width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                     const Align(
                       alignment: Alignment.bottomCenter,
@@ -183,10 +183,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(widget.movieDetailsModel.overview,
                         style:
-                            const TextStyle(fontSize: 18, color: Colors.white)),
+                            const TextStyle(fontSize: 15, color: Colors.white)),
                   ),
                 ),
               ),

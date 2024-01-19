@@ -75,8 +75,8 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                       ),
                       color: Colors.black87,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
+                    child: Container(
+                      color: const Color(0xff7052ff).withOpacity(0.5),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,29 +89,35 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                               style: const TextStyle(
                                 overflow: TextOverflow.ellipsis,
                                 color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
                             child: Text(
                               '(${movie.releaseDate.year})',
                               style: const TextStyle(
-                                  color: Colors.white, fontSize: 18),
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Text(
-                              movie.overview,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: const TextStyle(
-                                  color: Colors.white54, fontSize: 13),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(3.0),
+                          //   child: Text(
+                          //     movie.overview,
+                          //     overflow: TextOverflow.ellipsis,
+                          //     maxLines: 2,
+                          //     style: const TextStyle(
+                          //         color: Colors.white54, fontSize: 13),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

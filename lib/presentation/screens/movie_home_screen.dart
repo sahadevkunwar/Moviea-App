@@ -198,7 +198,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                     isScrollable: true,
                     indicator: const BoxDecoration(
                       shape: BoxShape.rectangle,
-                      color: Colors.green,
+                      color: Color(0xff7052ff),
                       borderRadius: BorderRadius.all(
                         Radius.circular(25),
                       ),
@@ -207,16 +207,27 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                     tabs: const [
                       Padding(
                         padding: EdgeInsets.all(5.0),
-                        child: Text('Upcoming', style: TextStyle(fontSize: 18)),
+                        child: Text('Upcoming',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            )),
                       ),
                       Padding(
                         padding: EdgeInsets.all(5.0),
-                        child: Text('Popular', style: TextStyle(fontSize: 18)),
+                        child: Text('Popular',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            )),
                       ),
                       Padding(
                         padding: EdgeInsets.all(5.0),
-                        child:
-                            Text('Top Rated', style: TextStyle(fontSize: 18)),
+                        child: Text('Top Rated',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                            )),
                       ),
                     ],
                   ),
