@@ -1,4 +1,5 @@
 import 'package:bloc_project/core/router.dart';
+import 'package:bloc_project/core/themes/theme_cubit/theme_cubit.dart';
 import 'package:bloc_project/core/utils/hive_storage.dart';
 import 'package:bloc_project/core/utils/shared_prefs.dart';
 import 'package:bloc_project/data/data_source/logout_source.dart';
@@ -38,6 +39,8 @@ Future<void> bootstrap() async {
   PreferenceUtils.init();
   await getIt<HiveUtils>().initDb();
 
+
+
   ///SOURCE SINGLETON
   getIt.registerLazySingleton<MovieRepository>(
       () => MovieRepository(MovieDataSource()));
@@ -63,4 +66,7 @@ Future<void> bootstrap() async {
   getIt.registerLazySingleton<AuthBloc>(() => AuthBloc());
   getIt.registerLazySingleton<LogoutCubit>(
       () => LogoutCubit(getIt<LogoutRepoImpl>()));
+
+  ///Theme singleton
+  getIt.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
 }

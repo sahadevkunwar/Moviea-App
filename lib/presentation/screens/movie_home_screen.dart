@@ -11,6 +11,8 @@ import 'package:floating_snackbar/floating_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../core/themes/theme_cubit/theme_cubit.dart';
+
 @RoutePage()
 class MovieHomeScreen extends StatefulWidget {
   const MovieHomeScreen({Key? key}) : super(key: key);
@@ -26,11 +28,14 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
   late TabController _tabController;
   late LogoutCubit _logoutCubit;
 
+  // late ThemeCubit themeCubit;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     setAppBarTitle();
+    // themeCubit = getIt<ThemeCubit>();
     _logoutCubit = getIt<LogoutCubit>();
     _movieDetailCubit = getIt<MovieDetailCubit>();
     _movieCubit = getIt<MovieCubit>()
@@ -106,7 +111,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           preferredSize: const Size.fromHeight(120),
 
           child: Container(
-            color: Colors.black87,
+            color: Colors.black54,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -123,6 +128,21 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
                           fontWeight: FontWeight.bold,
                           fontSize: 27,
                         ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // themeCubit.toggleTheme();
+                        getIt<ThemeCubit>().toggleTheme();
+                      },
+                      icon: BlocBuilder<ThemeCubit, ThemeData>(
+                        builder: (context, theme) {
+                          return Icon(
+                            theme == ThemeCubit.lightTheme
+                                ? Icons.dark_mode
+                                : Icons.light_mode,
+                          );
+                        },
                       ),
                     ),
                     IconButton(
@@ -241,7 +261,7 @@ class _MovieHomeScreenState extends State<MovieHomeScreen>
           // ),
         ),
         body: Container(
-          color: Colors.black87,
+          color: Colors.black54,
           child: TabBarView(
             controller: _tabController,
             children: [

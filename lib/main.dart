@@ -1,6 +1,7 @@
 import 'package:bloc_project/bootstrap.dart';
 import 'package:bloc_project/core/router.dart';
 import 'package:bloc_project/core/router.gr.dart';
+import 'package:bloc_project/core/themes/theme_cubit/theme_cubit.dart';
 import 'package:bloc_project/feature/auth/presentation/blocs/app_bloc/app_cubit.dart';
 import 'package:bloc_project/feature/auth/presentation/blocs/auth_bloc/auth_bloc.dart';
 import 'package:bloc_project/presentation/bloc/movie_cubit/movie_cubit.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               getIt<AppCubit>()..checkIfUserIsLoggedInPreviouslY(),
         ),
+        BlocProvider(create: (context) => getIt<ThemeCubit>()),
       ],
       child: BlocListener<AppCubit, AppState>(
         listener: (context, state) {
@@ -47,9 +49,14 @@ class MyApp extends StatelessWidget {
                     predicate: (route) => false);
               });
         },
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: _appRouter.config(),
+        child: BlocBuilder<ThemeCubit, ThemeData>(
+          builder: (context, theme) {
+            return MaterialApp.router(
+              theme: theme,
+              debugShowCheckedModeBanner: false,
+              routerConfig: _appRouter.config(),
+            );
+          },
         ),
       ),
     );

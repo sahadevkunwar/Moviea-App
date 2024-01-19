@@ -1,6 +1,6 @@
 # bloc_project
 
-MovieApp Flutter project using BlocK Pattern.
+MovieApp Flutter project using Bloc state management.
 
 ## Getting Started
 
